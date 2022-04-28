@@ -1,7 +1,8 @@
 import "./index.css";
 import TodoList from "./components/TodoList";
 import AddTodoRow from "./components/AddTodoRow";
-import { useState } from "react";
+import Header from "./components/Header";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 const INITIAL_DATA = [
   {
@@ -27,7 +28,7 @@ const INITIAL_DATA = [
 ];
 
 function App() {
-  const [data, setData] = useState(INITIAL_DATA);
+  const [data, setData] = useLocalStorage("todo_items", INITIAL_DATA);
 
   function addTodo(todo) {
     setData([...data, todo]);
@@ -50,7 +51,7 @@ function App() {
 
   return (
     <div className="w-full h-screen flex flex-col items-center bg-slate-50 px-8">
-      <h1 className="text-4xl font-bold mb-12 mt-32">What's your plan?</h1>
+      <Header>What's your plan?</Header>
       <div className="bg-white w-full shadow-xl rounded-xl max-w-lg overflow-hidden">
         <TodoList data={data} onDelete={deleteTodo} onComplete={toggleTodo} />
         <AddTodoRow onAddTodo={addTodo} />
